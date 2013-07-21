@@ -1,0 +1,10 @@
+--- orig/helloworld.cpp	2013-07-20 23:55:24.863871341 +0000
++++ helloworld/helloworld.cpp	2013-07-20 23:55:53.453913274 +0000
+@@ -3,6 +3,6 @@
+ 
+ int main()
+ {
+-    printf("Hello World");  // extrem de complexă treaba
++    printf("Hello World\n");  // extrem de complexă treaba
+     return 0;
+ }

@@ -24,15 +24,15 @@ S="${WORKDIR}"/${PN}/ # PN means the name of the ebuild. http://devmanual.gentoo
 # The next step must be used in anyway possible for the EAPI=5 to be valid
 # Naturally, you can start by using insinto functions 
 src_prepare() { #unpacked files in the sandbox can be easily modified before all instalation process in this way
-        epatch "${WORKDIR}/${P}-update.tar.gz"
-        epatch "${FILESDIR}/hellosource.patch"
+	epatch "${FILESDIR}/helloworld.patch"
 	insinto "${S}"/${PN}/ || die "Failed to cd into directory"
         emake || die "Failed to emake"
 }
 
 src_install() {
-        insinto /home/
+        insinto /usr/sbin/
         doins "${S}"/"${PN}" || die "Failed to copy compiled file" # Again, S means workdir and PN is helloworld
+        fperms 755 /usr/sbin/"${PN}"
         elog "you're either stupid or forced if you install this"
 }
 
