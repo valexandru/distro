@@ -7,8 +7,8 @@ EAPI="4"
 inherit eutils  
 
 DESCRIPTION="Having fun with GOlang. Just another program made by Noxis"
-HOMEPAGE="http://valexandru.biz"
-SRC_URI="http://valexandru.biz/dir_create.go"
+HOMEPAGE="https://github.com/BlackNoxis/gofun/"
+SRC_URI="https://github.com/BlackNoxis/gofun/blob/master/go7/dir_create.go"
 
 LICENSE="GPL-2"
 SLOT="0"  
