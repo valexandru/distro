@@ -17,20 +17,20 @@ SLOT="0"
 IUSE="ordered"
 
 DEPEND="dev-lang/go
-        dev-qt/qtgui
-        dev-qt/qtdbus
-        dev-qt/qtwebkit
-        dev-lang/go
-        dev-qt/qtgui
-        dev-qt/qtdbus
-        dev-qt/qtwebkit"
+dev-qt/qtgui
+dev-qt/qtdbus
+dev-qt/qtwebkit
+dev-lang/go
+dev-qt/qtgui
+dev-qt/qtdbus
+dev-qt/qtwebkit"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}"/"${PN}"-"${PV}"/
 
 src_unpack()
 {
-        git-2_src_unpack        base_src_unpack
+        git-2_src_unpack base_src_unpack
 }
 
 src_prepare() {
@@ -42,14 +42,14 @@ src_configure() {
         local conf_ordered
 
         if use ordered ; then
-                conf_ordered="CONFIG+=ordered"
+conf_ordered="CONFIG+=ordered"
                 conf_release=""
                 else
-                conf_release="CONFIG+=release"
+conf_release="CONFIG+=release"
                 conf_ordered=""
         fi
 
-        cd "${S}"/liteidex/
+cd "${S}"/liteidex/
         eqmake4 "${S}"/liteidex/liteidex.pro "PREFIX=${EPREFIX}/usr" "LIBDIR=/usr/$(get_libdir)" ${conf_release} ${conf_ordered}
 }
 
@@ -71,10 +71,19 @@ src_install() {
         # Binaries
         insinto /usr/bin
         doins "${S}"/liteidex/liteide/bin/liteide
+	doins "${S}"/liteidex/bin/go*
 
-	# Bin Libraries
+        # Bin Libraries
         insinto /usr/lib
-        doins "${S}"/liteidex/liteide/bin/libliteapp.so "${S}"/liteidex/liteide/bin/libliteapp.so.1 "${S}"/liteidex/liteide/bin/libliteapp.so.1.0 "${S}"/liteidex/liteide/bin/libliteapp.so.1.0.0
+        doins "${S}"/liteidex/liteide/bin/libliteapp.so "${S}"/liteidex/liteide/bin/libliteapp.so.1 "${S}"/liteidex/liteide/bin/libliteapp.so.1.0 
+"${S}"/liteidex/liteide/bin/libliteapp.so.1.0.0
+	
+	insinto /usr/share/applications/
+	doins "${S}"/liteidex/liteide.desktop
+
+	#Lib Liraries
+	insinto /usr/lib/${PN}
+        doins "${S}"/liteidex/liteide/lib/${PN}/lib*
 
         # Plugins
         insinto /usr/lib/${PN}/plugins/
@@ -90,14 +99,14 @@ src_install() {
         insinto /usr/lib/${PN}
         doins /usr/$(get_libdir)/qt4/libQtCore.so*
         doins /usr/$(get_libdir)/qt4/libQtXml.so*
-        doins /usr/$(get_libdir)/qt4/libQtNetwork.so*
-        doins /usr/$(get_libdir)/qt4/libQtGui.so*
+        doins /usr/$(get_libdir)/qt4/libQtNetwork.so*        
+	doins /usr/$(get_libdir)/qt4/libQtGui.so*
         doins /usr/$(get_libdir)/qt4/libQtDBus.so*
         doins /usr/$(get_libdir)/qt4/libQtWebKit.so*
 
-        fperms u+x /usr/bin/liteide
-        fperms u+x /usr/lib/${PN}/bin/goapi
-	fperms u+x /usr/lib/${PN}/bin/goastview
-	fperms u+x /usr/lib/${PN}/bin/godocview
-	fperms u+x /usr/lib/${PN}/bin/goexec
+        fperms 755 /usr/bin/liteide
+        fperms 755 /usr/bin/goapi
+        fperms 755 /usr/bin/goastview
+        fperms 755 /usr/bin/godocview
+        fperms 755 /usr/bin/goexec
 }
