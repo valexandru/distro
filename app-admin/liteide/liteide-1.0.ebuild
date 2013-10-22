@@ -55,7 +55,7 @@ src_configure() {
 
 src_install() {
         cd "${S}"/liteidex/
-        qt4-r2_src_install DESTDIR="${D}"opt/${PN}/ INSTALL_ROOT="${D}"opt/${PN}/ || die
+        qt4-r2_src_install DESTDIR="${D}"usr/lib/${PN}/ INSTALL_ROOT="${D}"usr/lib/${PN}/ || die
         
         export GOPATH=$(pwd)
 
@@ -69,22 +69,25 @@ src_install() {
         dodoc LICENSE.LGPL LGPL_EXCEPTION.TXT ../README.md
 
         # Binaries
-        insinto /opt/${PN}/bin
-        doins "${S}"/liteidex/${PN}/bin/*
-        doins "${S}"/liteidex/bin/*
+        insinto /usr/bin
+        doins "${S}"/liteidex/liteide/bin/liteide
+
+	# Bin Libraries
+        insinto /usr/lib
+        doins "${S}"/liteidex/liteide/bin/libliteapp.so "${S}"/liteidex/liteide/bin/libliteapp.so.1 "${S}"/liteidex/liteide/bin/libliteapp.so.1.0 "${S}"/liteidex/liteide/bin/libliteapp.so.1.0.0
 
         # Plugins
-        insinto /opt/${PN}/lib/${PN}/plugins/
+        insinto /usr/lib/${PN}/plugins/
         doins "${S}"/liteidex/${PN}/lib/${PN}/plugins/*.so
 
         # Documentation
-        insinto /opt/${PN}/share/${PN}/
+        insinto /usr/share/${PN}/
         doins -r "${S}"/liteidex/deploy/*
         doins -r "${S}"/liteidex/os_deploy/*
 
         # QT Libraries
         addread /usr/$(get_libdir)/qt4/
-        insinto /opt/${PN}/lib/${PN}
+        insinto /usr/lib/${PN}
         doins /usr/$(get_libdir)/qt4/libQtCore.so*
         doins /usr/$(get_libdir)/qt4/libQtXml.so*
         doins /usr/$(get_libdir)/qt4/libQtNetwork.so*
@@ -92,9 +95,9 @@ src_install() {
         doins /usr/$(get_libdir)/qt4/libQtDBus.so*
         doins /usr/$(get_libdir)/qt4/libQtWebKit.so*
 
-        fperms u+x /opt/${PN}/bin/liteide
-        fperms u+x /opt/${PN}/bin/goapi
-	fperms u+x /opt/${PN}/bin/goastview
-	fperms u+x /opt/${PN}/bin/godocview
-	fperms u+x /opt/${PN}/bin/goexec
+        fperms u+x /usr/bin/liteide
+        fperms u+x /usr/lib/${PN}/bin/goapi
+	fperms u+x /usr/lib/${PN}/bin/goastview
+	fperms u+x /usr/lib/${PN}/bin/godocview
+	fperms u+x /usr/lib/${PN}/bin/goexec
 }
